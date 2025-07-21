@@ -27,3 +27,36 @@ In addition to guest features, registered users can:
 - Rate games using a star-based or numerical system.
 - View their saved games and reviews on their profile page, with separate sections for each list.
 
+##  Tech Stack
+
+### Frontend
+- **Vue 3** – Modern component-based JavaScript framework  
+- **Vite** – Lightning-fast development server and bundler  
+- **Tailwind CSS** – Utility-first CSS for rapid, responsive UI  
+- **Inertia.js (Vue 3)** – Bridges Laravel and Vue for server-driven SPA
+
+### Backend
+- **Laravel 11** – Full-featured PHP framework for APIs and business logic
+
+### Game Data APIs
+- **IGDB API**  
+  - Format: JSON, REST  
+  - Rate Limit: ~240 requests per minute  
+  - More technical, highly detailed game data
+
+### API Handling Tool
+- **IGDB Laravel Wrapper** – Simplifies IGDB usage with Laravel-style models , made directly for the API
+
+---
+
+## Getting Started
+
+1. Clone the repository  
+2. Install dependencies  
+   ```bash
+   composer install
+   ```
+   ```bash
+   npm install
+   ```
+
