@@ -1,30 +1,80 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue'
+import { router } from '@inertiajs/vue3'
+import GameCard from '@/Components/GameCard.vue'
+import GameCardWide from '@/Components/GameCardWide.vue'
+import Navigation from '@/Components/Navigation.vue'
+import SearchBar from '@/Components/SearchBar.vue'
+
+const props = defineProps(['games','genre', 'newReleases', 'popularGames', 'search'])
+
+
+const searchQuery = ref(props.search)
+const hasSearched = ref(!!props.search)
+
+const submitSearch = () => {
+  router.get('/dashboard', { search: searchQuery.value }, {
+    preserveScroll: true,
+    replace: true,
+  })
+}
 </script>
 
+
 <template>
-    <Head title="Dashboard" />
+  <div class="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-100">
+    <Navigation />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                Dashboard
-            </h2>
-        </template>
+    <div class="flex justify-center mt-8 px-4 mb-6">
+      <SearchBar v-model="searchQuery" @search="submitSearch" />
+    </div>
 
-        <div class="py-12">
-            <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div
-                    class="overflow-hidden bg-white shadow-sm sm:rounded-lg"
-                >
-                    <div class="p-6 text-gray-900">
-                        You're logged in!
-                    </div>
-                </div>
-            </div>
+  <section v-if="hasSearched">
+    <h2 class="text-2xl font-bold px-6 mb-3">
+      Search Results for "{{ searchQuery }}"
+    </h2>
+    <div v-if="games.length > 0"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-6 pb-4">
+      <GameCard v-for="game in games" :key="game.id" :game="game" />
+    </div>
+    <div v-else class="px-6 text-gray-400 italic">No results found.</div>
+  </section>
+
+
+
+    <!-- <section class="mt-10" v-if="searchQuery && games && games.length > 0">
+      <h2 class="text-2xl font-bold px-6 mb-3">Search Results for "{{ searchQuery }}"</h2>
+      <div class="flex gap-6 px-6 pb-4 overflow-x-auto no-scrollbar">
+        <GameCard v-for="game in games" :key="game.id" :game="game" />
+      </div>
+    </section> -->
+
+    <template v-else>
+      <section class="mt-10">
+        <h2 class="text-2xl font-bold px-6 mb-3">New Releases</h2>
+        <div class="flex gap-6 px-6 pb-4 overflow-x-auto no-scrollbar">
+          <GameCard v-for="game in newReleases" :key="game.id" :game="game" />
         </div>
-    </AuthenticatedLayout>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="text-2xl font-bold px-6 mb-3">Popular Games</h2>
+        <div class="flex flex-col gap-4 px-6">
+          <GameCardWide
+            v-for="(game, idx) in popularGames"
+            :key="game.id"
+            :game="game"
+            :index="idx"
+          />
+        </div>
+      </section>
+    </template>
+  </div>
+  
 </template>
+
+<style>
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>

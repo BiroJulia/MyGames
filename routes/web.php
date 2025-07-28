@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Services\IGDBService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\GameController;
+use App\Http\Controllers\DashboardController;
 use MarcReichel\IGDBLaravel\Models\Game;
 
 
-Route::get('/games', [GameController::class, 'show']);
+Route::get('/games', [DashboardController::class, 'show']);
 
 
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Dashboard', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -23,9 +23,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
