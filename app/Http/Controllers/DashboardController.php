@@ -20,13 +20,9 @@ class DashboardController extends Controller
     public function show(Request $request)
     {
         $search = $request->input('search');
-        if ($search) {
-            $games = $this->igdb->searchGames($search); 
-        } else {
-            $games = collect();
-        }
+        
         return Inertia::render('Dashboard', [
-            'games' => $games,
+            'games' => $search ? $this->igdb->searchGames($search) :collect(),
             'search' => $search,
             'newReleases' => $this->igdb->fetchNewReleases(),
             'popularGames' => $this->igdb->fetchPopularGames(),
