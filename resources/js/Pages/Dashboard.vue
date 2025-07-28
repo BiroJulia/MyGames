@@ -41,14 +41,6 @@ const submitSearch = () => {
   </section>
 
 
-
-    <!-- <section class="mt-10" v-if="searchQuery && games && games.length > 0">
-      <h2 class="text-2xl font-bold px-6 mb-3">Search Results for "{{ searchQuery }}"</h2>
-      <div class="flex gap-6 px-6 pb-4 overflow-x-auto no-scrollbar">
-        <GameCard v-for="game in games" :key="game.id" :game="game" />
-      </div>
-    </section> -->
-
     <template v-else>
       <section class="mt-10">
         <h2 class="text-2xl font-bold px-6 mb-3">New Releases</h2>
