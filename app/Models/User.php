@@ -46,9 +46,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function userGames()
+    public function games()
     {
-        return $this->hasMany(UserGame::class);
+        return $this->belongsToMany(Game::class)
+                    ->using(GameUser::class)
+                    ->withPivot(['status', 'rating'])
+                    ->withTimestamps();
     }
 
     public function reviews()

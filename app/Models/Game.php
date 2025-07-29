@@ -12,14 +12,17 @@ class Game extends Model
         'release_date',
         'cover_url',
     ];
-    public function userGames()
+    public function users()
     {
-        return $this->hasMany(UserGame::class);
+        return $this->belongsToMany(User::class)
+                    ->using(GameUser::class)
+                    ->withPivot(['status', 'rating'])
+                    ->withTimestamps();
     }
 
     public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'game_genres');
+        return $this->belongsToMany(Genre::class);
     }
 
     public function reviews()
