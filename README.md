@@ -53,10 +53,31 @@ In addition to guest features, registered users can:
 
 1. Clone the repository  
 2. Install dependencies  
-   ```bash
-   composer install
-   ```
-   ```bash
-   npm install
-   ```
+  ```bash
+  composer install
+  ```
+  ```bash
+  npm install
+  ```
+3. Set up your `.env` file 
+  ```bash 
+  cp .env.example .env
+  ```
+4. Connect to database 
+(for example)
+  ```bash 
+  DB_CONNECTION=pgsql
+  DB_HOST=127.0.0.1
+  DB_PORT=5432
+  DB_DATABASE=my_games
+  DB_USERNAME=postgres
+  ```
+5. Run migrations 
+```bash
+php artisan migrate
+```
 
+6. Start the server 
+```bash
+composer run dev
+```
