@@ -14,6 +14,7 @@ Route::get('/games', [DashboardController::class, 'show']);
 
 
 
+
 Route::get('/', function () {
     return Inertia::render('Dashboard', [
         'canLogin' => Route::has('login'),
@@ -23,6 +24,7 @@ Route::get('/', function () {
     ]);
 });
 Route::get('/', [DashboardController::class, 'show']);
+
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
