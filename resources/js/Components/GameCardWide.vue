@@ -1,12 +1,18 @@
 <script setup>
+import { router } from '@inertiajs/vue3'
 const props = defineProps({
   game: Object,
   index: Number,
 });
+
+const goToDetail = () => {
+  router.get(`/game/${props.game.id}`)
+}
 </script>
 
 <template>
-  <div class="relative flex items-center rounded-2xl shadow-lg px-4 py-3 mb-4 w-full max-w-2xl overflow-hidden ">
+  <div class="relative flex items-center rounded-2xl shadow-lg px-4 py-3 mb-4 w-full max-w-2xl overflow-hidden cursor-pointer"
+  @click="goToDetail">
     
     <div class="absolute inset-0" v-if="game.cover?.url"
       :style="{backgroundImage: `url('${game.cover.url.replace('t_thumb', 't_screenshot_big')}')`, backgroundPosition: 'center'}">
@@ -19,7 +25,10 @@ const props = defineProps({
         class="flex items-center justify-center bg-gray-700 text-gray-200 font-semibold rounded-lg w-7 h-7 mr-3 text-sm bg-opacity-70 backdrop-blur-sm">
         {{ index + 1 }}
       </div>
-      <img :src="game.cover.url" alt="Cover" class="w-12 h-12 rounded-lg object-cover shadow"/>
+      <img :src="game.cover?.url
+          ? game.cover.url.replace('t_thumb', 't_cover_big')
+          : '/images/no-image.svg'" 
+          alt="Cover" class="w-12 h-12 rounded-lg object-cover shadow"/>
     </div>
 
     <div class="ml-5 flex-1 min-w-0 ">
@@ -35,8 +44,8 @@ const props = defineProps({
     </div>
 
     <button class="ml-auto rounded-full border border-gray-700 bg-gray-800 w-8 h-8 flex items-center 
-    justify-center transform transition-colors duration-200 hover:bg-gray-600 group z-10" title="Add">
-
+    justify-center transform transition-colors duration-200 hover:bg-gray-600 group z-10" title="Add"
+    @click.stop>
       <span class="text-2xl text-gray-300">+</span>
     </button>
   </div>
