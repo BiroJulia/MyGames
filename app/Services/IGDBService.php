@@ -27,26 +27,44 @@ class IGDBService
     {
         return Game::select(['id', 'name', 'first_release_date', 'genres.name', 'cover.url'])
             ->where('first_release_date', '>=', now()->subMonth()->timestamp)
-            ->orderBy('first_release_date', 'desc')
-            ->orderBy('popularity', 'desc')
+            ->orderBy('first_release_date')
             ->with(['cover', 'genres'])
-            ->limit(15)
+            ->limit(30)
             ->get();
     }
 
 
     public function searchGames(string $query): Collection
     {
-        return Game::select(['id', 'name', 'first_release_date', 'rating', 'cover.url'])
-            ->where('name', 'ilike', "%{$query}%")
+        return Game::select(['id', 'name', 'first_release_date', 'rating'])
             ->where('name', 'ilike', "%{$query}%")
             ->with(['cover', 'genres'])
-            // ->orderBy('rating', 'desc') 
-            ->orderBy('name') 
-            ->limit(20)
+            ->orderBy('name')
+            ->limit(40)
             ->get();
     }
 
+
+    public function getGameDetails(int $id): ?Game
+    {
+        return Game::select([
+            'id',
+            'name',
+            'first_release_date',
+            'rating',
+            'summary',
+            'storyline'
+        ])
+            ->with([
+                'artworks',
+                'screenshots',
+                'cover',
+                'genres',
+                'platforms',
+                'involved_companies.company'
+            ])
+            ->find($id);
+    }
 
 
 }

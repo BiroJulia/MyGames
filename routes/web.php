@@ -8,6 +8,7 @@ use App\Services\IGDBService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
 use MarcReichel\IGDBLaravel\Models\Game;
+use App\Http\Controllers\GameDetailController;
 
 
 Route::get('/games', [DashboardController::class, 'show']);
@@ -24,6 +25,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+
+Route::get('/game/{id}', [GameDetailController::class, 'show'])
+     ->name('game.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

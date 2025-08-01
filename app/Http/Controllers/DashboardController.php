@@ -11,22 +11,17 @@ class DashboardController extends Controller
 {
     protected IGDBService $igdb;
 
-
     public function __construct(IGDBService $igdb)
     {
         $this->igdb = $igdb;
     }
 
-    public function show(Request $request)
+ public function show(Request $request)
     {
         $search = $request->input('search');
-        if ($search) {
-            $games = $this->igdb->searchGames($search); 
-        } else {
-            $games = collect();
-        }
+        
         return Inertia::render('Dashboard', [
-            'games' => $games,
+            'games' => $search ? $this->igdb->searchGames($search) :collect(),
             'search' => $search,
             'newReleases' => $this->igdb->fetchNewReleases(),
             'popularGames' => $this->igdb->fetchPopularGames(),
