@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\IGDBService;
 use Inertia\Inertia;
+use App\Http\Resources\GameDetailResource;
 
 class GameDetailController extends Controller
 {
@@ -23,8 +24,11 @@ class GameDetailController extends Controller
             abort(404);
         }
 
+        $gameResource = GameDetailResource::make($game);
+        // dd(GameDetailResource::make($game)->resolve());
         return Inertia::render('GameDetail', [
-            'game' => $game
+            'game' => $gameResource->toArray(request()),
+            
             
         ]);
     }

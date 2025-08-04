@@ -26,7 +26,6 @@ Route::get('/', function () {
 });
 Route::get('/', [DashboardController::class, 'show']);
 
-
 Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
 Route::get('/game/{id}', [GameDetailController::class, 'show'])

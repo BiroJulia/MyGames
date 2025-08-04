@@ -14,11 +14,12 @@ const goToDetail = () => {
   <div class="relative flex items-center rounded-2xl shadow-lg px-4 py-3 mb-4 w-full max-w-2xl overflow-hidden cursor-pointer"
   @click="goToDetail">
     
-    <div class="absolute inset-0" v-if="game.cover?.url"
-      :style="{backgroundImage: `url('${game.cover.url.replace('t_thumb', 't_screenshot_big')}')`, backgroundPosition: 'center'}">
-      <div class="absolute inset-0 backdrop-blur-md bg-gray-900/70"></div>
-    </div>
-    
+     <img v-if="game.cover?.url"
+      :src="game.cover.url.replace('t_thumb', 't_screenshot_big')"
+      alt="Background"
+      class="absolute inset-0 w-full h-full object-cover"/>
+    <div class="absolute inset-0 backdrop-blur-md bg-gray-900/70"></div>
+
     <div class="relative flex items-center w-16 flex-shrink-0 ">
       <div
         v-if="typeof index === 'number'"
