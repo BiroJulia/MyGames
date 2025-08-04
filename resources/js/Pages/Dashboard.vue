@@ -12,11 +12,15 @@ const props = defineProps(['games','genre', 'newReleases', 'popularGames', 'sear
 
 const searchQuery = ref(props.search)
 const hasSearched = ref(!!props.search)
+const isLoading = ref(false)
+const error = ref(null)
 
 const submitSearch = () => {
   router.get('/dashboard', { search: searchQuery.value }, {
     preserveScroll: true,
     replace: true,
+    onStart:()=>{ isLoading.value = true },
+    onFinish:()=>{ isLoading.value = false },
   })
 }
 </script>
@@ -28,6 +32,10 @@ const submitSearch = () => {
 
     <div class="flex justify-center mt-8 px-4 mb-6">
       <SearchBar v-model="searchQuery" @search="submitSearch" />
+    </div>
+
+    <div v-if="isLoading" class="text-center text-gray-400 py-6">
+      Loading…
     </div>
 
   <section v-if="hasSearched">

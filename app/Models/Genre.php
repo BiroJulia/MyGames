@@ -12,7 +12,7 @@ class Genre extends Model
 
     public function games()
     {
-        return $this->belongsToMany(Game::class, 'game_genre');
+        return $this->belongsToMany(Game::class);
     }
 }
 
