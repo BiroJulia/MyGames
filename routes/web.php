@@ -23,6 +23,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/', [DashboardController::class, 'show']);
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
 
